@@ -15,4 +15,5 @@ struct Identifiers {
     static let userPlaceHolderImage = "user-placeholder"
     static let systemNoteTextImage = "note.text"
     static let emptyImage = ""
+    static let userDetailNetworkURL = "https://api.github.com/users/"
 }

@@ -10,15 +10,24 @@ import Foundation
 protocol UserListBusinessLogic: AnyObject {
     
     func getAllUserList()
+    func fetchFilteredListBasedOnSearch(_ text: String)
+    func loadMoreUserList()
 }
 
-class UserlistViewModel {
+protocol UserListDataStore {
+    
+    var userList: [User] { get set }
+}
+
+class UserlistViewModel: UserListDataStore {
     
     private let serviceLayer: NetworkManager
     weak var viewController: UserListDisplayLogic?
+    var userList: [User]
     
     init() {
         
+        userList = []
         serviceLayer = NetworkManager()
     }
     
@@ -38,9 +47,42 @@ extension UserlistViewModel: UserListBusinessLogic {
             }
             switch result {
             case .success(let user):
+                self.userList = user
                 self.presentUserList(user)
             case .failure(let error):
                 print(error)
+            }
+        }
+    }
+    
+    func fetchFilteredListBasedOnSearch(_ text: String) {
+        
+        guard !text.isEmpty else {
+            
+            presentUserList(userList)
+            return
+        }
+        let filteredUserList = userList.filter({ $0.userName.lowercased().contains(text.lowercased())})
+        presentUserList(filteredUserList)
+    }
+    
+    func loadMoreUserList() {
+        
+        if let lastUser = userList.last {
+            
+            serviceLayer.getUserList(_startIndex: lastUser.userId) { [weak self] (result) in
+                
+                guard let self = self else {
+                    
+                    return
+                }
+                switch result {
+                case .success(let user):
+                    self.userList.append(contentsOf: user)
+                    self.presentUserList(self.userList)
+                case .failure(let error):
+                    print(error)
+                }
             }
         }
     }

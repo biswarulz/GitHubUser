@@ -20,6 +20,7 @@ class UserListViewController: UIViewController {
     }()
     private var userListViewModel: UserListBusinessLogic?
     private var dataSource: UserListDataSource?
+    private var isUserSearched = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,7 @@ class UserListViewController: UIViewController {
         
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
+        searchController.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search User"
         navigationItem.searchController = searchController
@@ -61,6 +63,7 @@ class UserListViewController: UIViewController {
     
     private func tryToGetUserList() {
         
+        sceneView.showSpinner()
         userListViewModel?.getAllUserList()
     }
 }
@@ -69,6 +72,7 @@ extension UserListViewController: UserListDisplayLogic {
     
     func displayUserList(_ viewData: UserListViewData) {
         
+        sceneView.hideSpinner()
         dataSource?.userListViewData = viewData
         sceneView.tableView.reloadData()
     }
@@ -80,12 +84,48 @@ extension UserListViewController: UITableViewDelegate {
         
         return 120.0
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        let numberOfRows = tableView.numberOfRows(inSection: indexPath.section)
+        tableView.tableFooterView?.isHidden = true
+        if indexPath.row == numberOfRows - 1 && !isUserSearched {
+            
+            let spinner = UIActivityIndicatorView(style: .medium)
+            spinner.startAnimating()
+            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(44))
+
+            tableView.tableFooterView = spinner
+            tableView.tableFooterView?.isHidden = false
+            userListViewModel?.loadMoreUserList()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let currentUser = dataSource?.userListViewData.userList[indexPath.row]
+        let detailVC = UserDetailViewController(username: currentUser?.userName ?? "")
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
 
 extension UserListViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         
+        if let text = searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+            
+            isUserSearched = true
+            userListViewModel?.fetchFilteredListBasedOnSearch(text)
+        }
+    }
+}
+
+extension UserListViewController: UISearchControllerDelegate {
+    
+    func didDismissSearchController(_ searchController: UISearchController) {
+        
+        isUserSearched = false
     }
 }
 

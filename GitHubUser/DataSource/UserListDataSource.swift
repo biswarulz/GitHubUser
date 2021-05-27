@@ -33,6 +33,8 @@ extension UserListDataSource: UITableViewDataSource {
         
         let user = userListViewData.userList[indexPath.row]
         cell.fillData(user, isNoteAvailable: userListViewData.isNoteAvailable)
+        cell.selectionStyle = .none
         return cell
     }
+    
 }
