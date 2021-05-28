@@ -10,6 +10,7 @@ import Foundation
 protocol UserListBusinessLogic: AnyObject {
     
     func getAllUserList()
+    func getAllUserListFromCoreData()
     func fetchFilteredListBasedOnSearch(_ text: String)
     func loadMoreUserList()
 }
@@ -58,6 +59,13 @@ extension UserlistViewModel: UserListBusinessLogic {
         }
     }
     
+    func getAllUserListFromCoreData() {
+        
+        let users = dataController.fetchUsers()
+        self.userList = users
+        presentUserList(users)
+    }
+    
     func fetchFilteredListBasedOnSearch(_ text: String) {
         
         guard !text.isEmpty else {
@@ -93,7 +101,15 @@ extension UserlistViewModel: UserListBusinessLogic {
     
     private func presentUserList(_ data: [User]) {
         
-        let viewData = UserListViewData(userList: data, isNoteAvailable: false)
+        var updateList: [User] = []
+        for user in data {
+            
+            var user = user
+            let note = dataController.getNoteDataForUser(user.userName)
+            user.isNoteAvailable = note.isEmpty ? false : true
+            updateList.append(user)
+        }
+        let viewData = UserListViewData(userList: updateList)
         viewController?.displayUserList(viewData)
     }
 }

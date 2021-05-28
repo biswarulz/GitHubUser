@@ -9,8 +9,11 @@ import UIKit
 
 class GenericView: UIView {
     
-    let wrapperView: UIView
-    let spinner: UIActivityIndicatorView
+    private let wrapperView: UIView
+    private let spinner: UIActivityIndicatorView
+    private let noInternetView: UIView
+    private let noInternetLabel: UILabel
+    private var noInternetViewHeightContraint: NSLayoutConstraint?
     
     /// constant values used
     private struct ViewTraits {
@@ -25,15 +28,24 @@ class GenericView: UIView {
         
         wrapperView = UIView()
         wrapperView.backgroundColor = .lightGray
-        wrapperView.translatesAutoresizingMaskIntoConstraints = false
         
         spinner = UIActivityIndicatorView()
         spinner.color = .white
-        spinner.translatesAutoresizingMaskIntoConstraints = false
+        
+        noInternetView = UIView()
+        noInternetView.backgroundColor = .cyan
+        noInternetView.isHidden = true
+        
+        noInternetLabel = UILabel()
+        noInternetLabel.text = "Internet unavailable!"
+        noInternetLabel.font = UIFont.systemFont(ofSize: 18.0)
+        noInternetLabel.textColor = .darkGray
+        
+        noInternetView.addSubViewsForAutoLayout([noInternetLabel])
         
         super.init(frame: frame)
-        wrapperView.addSubview(spinner)
-        addSubview(wrapperView)
+        wrapperView.addSubViewsForAutoLayout([spinner])
+        addSubViewsForAutoLayout([wrapperView, noInternetView])
         addCustomConstraints()
     }
     
@@ -63,10 +75,35 @@ class GenericView: UIView {
 
     }
     
+    func showOfflineBanner(_ show: Bool) {
+        
+        bringSubviewToFront(noInternetView)
+        UIView.animate(withDuration: 0.5) {
+            
+            self.noInternetView.isHidden = show ? false : true
+        } completion: { (_) in
+            
+            self.noInternetViewHeightContraint?.constant = show ? 60.0 : 0.0
+        }
+    }
+    
     private func addCustomConstraints() {
         
+        let noInternetViewHeightContraint = noInternetView.heightAnchor.constraint(equalToConstant: 0.0)
+        self.noInternetViewHeightContraint = noInternetViewHeightContraint
         NSLayoutConstraint.activate([
-            wrapperView.topAnchor.constraint(equalTo: topAnchor),
+            
+            noInternetView.topAnchor.constraint(equalTo: topAnchor),
+            noInternetView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            noInternetView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            noInternetViewHeightContraint,
+            
+            noInternetLabel.topAnchor.constraint(equalTo: noInternetView.topAnchor),
+            noInternetLabel.leadingAnchor.constraint(equalTo: noInternetView.leadingAnchor),
+            noInternetLabel.trailingAnchor.constraint(equalTo: noInternetView.trailingAnchor),
+            noInternetLabel.bottomAnchor.constraint(equalTo: noInternetView.bottomAnchor),
+            
+            wrapperView.topAnchor.constraint(equalTo: noInternetView.topAnchor),
             wrapperView.leadingAnchor.constraint(equalTo: leadingAnchor),
             wrapperView.trailingAnchor.constraint(equalTo: trailingAnchor),
             wrapperView.bottomAnchor.constraint(equalTo: bottomAnchor),

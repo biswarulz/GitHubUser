@@ -12,7 +12,7 @@ protocol UserListDisplayLogic: AnyObject {
     func displayUserList(_ viewData: UserListViewData)
 }
 
-class UserListViewController: UIViewController {
+class UserListViewController: GenericViewController {
 
     lazy var sceneView: UserListView = {
         
@@ -29,16 +29,36 @@ class UserListViewController: UIViewController {
         title = "User"
         setUpArchitecture()
         setupSearchField()
-        let viewData = UserListViewData(userList: [], isNoteAvailable: false)
+        let viewData = UserListViewData(userList: [])
         dataSource = UserListDataSource(viewData)
         sceneView.tableView.dataSource = dataSource
         sceneView.tableView.delegate = self
-        tryToGetUserList()
+        tryToGetUserListFromRestCall()
+        
+        // handle when network comes online
+        let retryGainConnectionAction: RetryAction = { [weak self] in
+            
+            guard let self = self else { return }
+            self.tryToGetUserListFromRestCall()
+        }
+        
+        let retryLossConnectionAction: RetryAction = { [weak self] in
+            
+            guard let self = self else { return }
+            self.tryToGetUserListFromOffline()
+        }
+        afterGainConnectivity = retryGainConnectionAction
+        afterLostConnectivity = retryLossConnectionAction
     }
     
     override func loadView() {
         
         view = sceneView
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        tryToGetUserListFromOffline()
     }
     
     private func setupSearchField() {
@@ -60,10 +80,16 @@ class UserListViewController: UIViewController {
         viewController.userListViewModel = viewModel
     }
     
-    private func tryToGetUserList() {
+    private func tryToGetUserListFromRestCall() {
         
         sceneView.showSpinner()
         userListViewModel?.getAllUserList()
+    }
+    
+    private func tryToGetUserListFromOffline() {
+        
+        sceneView.showSpinner()
+        userListViewModel?.getAllUserListFromCoreData()
     }
 }
 

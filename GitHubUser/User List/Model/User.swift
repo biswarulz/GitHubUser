@@ -15,6 +15,7 @@ struct User: Decodable {
     let avatarURL: String
     let userType: String
     let isAdmin: Bool
+    var isNoteAvailable: Bool
     
     enum CodingKeys: String, CodingKey {
         
@@ -23,6 +24,7 @@ struct User: Decodable {
         case avatarURL = "avatar_url"
         case userType = "type"
         case isAdmin = "site_admin"
+        case isNoteAvailable
     }
 
     init(from decoder: Decoder) throws {
@@ -34,24 +36,26 @@ struct User: Decodable {
         avatarURL = try container.decodeIfPresent(String.self, forKey: .avatarURL) ?? ""
         userType = try container.decodeIfPresent(String.self, forKey: .userType) ?? ""
         isAdmin = try container.decodeIfPresent(Bool.self, forKey: .isAdmin) ?? false
+        isNoteAvailable = try container.decodeIfPresent(Bool.self, forKey: .isNoteAvailable) ?? false
     }
     
     init(userName: String = "",
          userId: Int = 0,
          avatarURL: String = "",
          userType: String = "",
-         isAdmin: Bool = false) {
+         isAdmin: Bool = false,
+         isNoteAvailable: Bool = false) {
         
         self.userName = userName
         self.userId = userId
         self.avatarURL = avatarURL
         self.userType = userType
         self.isAdmin = isAdmin
+        self.isNoteAvailable = isNoteAvailable
     }
 }
 
 struct UserListViewData {
     
     let userList: [User]
-    let isNoteAvailable: Bool
 }

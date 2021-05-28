@@ -7,11 +7,17 @@
 
 import UIKit
 
+protocol SaveNoteDataDelegate: AnyObject {
+    
+    func saveNoteButtonClicked(_ text: String)
+}
+
 class UserDetailNoteTableViewCell: UITableViewCell {
 
     private let noteLabel: UILabel
     private let noteTextView: UITextView
     private let saveButton: UIButton
+    weak var delegate: SaveNoteDataDelegate?
     
     /// constant values used
     private struct ViewTraits {
@@ -36,6 +42,8 @@ class UserDetailNoteTableViewCell: UITableViewCell {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        saveButton.addTarget(self, action: #selector(didTapOnSaveNote), for: .touchUpInside)
+
         contentView.addSubViewsForAutoLayout([noteLabel, noteTextView, saveButton])
         addCustomConstraints()
     }
@@ -49,6 +57,22 @@ class UserDetailNoteTableViewCell: UITableViewCell {
         noteLabel.text = "Note:"
         noteTextView.text = data.noteText
         saveButton.setTitle("Save", for: .normal)
+    }
+    
+    @objc func didTapOnSaveNote() {
+        
+        delegate?.saveNoteButtonClicked(noteTextView.text)
+        saveButton.setTitle("Saved", for: .normal)
+        saveButton.backgroundColor = .green
+        UIView.animate(withDuration: 3.0) {
+            
+            self.saveButton.backgroundColor = .gray
+
+        } completion: { (_) in
+            
+            self.saveButton.setTitle("Save", for: .normal)
+
+        }
     }
     
     private func addCustomConstraints() {
@@ -67,7 +91,7 @@ class UserDetailNoteTableViewCell: UITableViewCell {
             
             saveButton.topAnchor.constraint(equalTo: noteTextView.bottomAnchor, constant: ViewTraits.viewMargin),
             saveButton.heightAnchor.constraint(equalToConstant: 50.0),
-            saveButton.widthAnchor.constraint(equalToConstant: 60.0),
+            saveButton.widthAnchor.constraint(equalToConstant: 100.0),
             saveButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         ])
     }

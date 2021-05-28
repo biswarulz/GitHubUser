@@ -29,6 +29,7 @@
 		2556EBD52660BB5D003866C0 /* UserDetailMediaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2556EBD42660BB5D003866C0 /* UserDetailMediaTableViewCell.swift */; };
 		2556EBDD2660BBB2003866C0 /* UserDetailDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2556EBDC2660BBB2003866C0 /* UserDetailDescriptionTableViewCell.swift */; };
 		2556EBE22660BC7D003866C0 /* UserDetailNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2556EBE12660BC7D003866C0 /* UserDetailNoteTableViewCell.swift */; };
+		25834A122661545400759B72 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25834A112661545400759B72 /* GenericViewController.swift */; };
 		2587C40B266002F00021888C /* UserDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2587C40A266002F00021888C /* UserDetailView.swift */; };
 		2587C413266003180021888C /* UserDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2587C412266003180021888C /* UserDetail.swift */; };
 		2587C41B26600CCE0021888C /* UserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2587C41A26600CCE0021888C /* UserDetailViewController.swift */; };
@@ -89,6 +90,7 @@
 		2556EBD42660BB5D003866C0 /* UserDetailMediaTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailMediaTableViewCell.swift; sourceTree = "<group>"; };
 		2556EBDC2660BBB2003866C0 /* UserDetailDescriptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		2556EBE12660BC7D003866C0 /* UserDetailNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailNoteTableViewCell.swift; sourceTree = "<group>"; };
+		25834A112661545400759B72 /* GenericViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
 		2587C40A266002F00021888C /* UserDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailView.swift; sourceTree = "<group>"; };
 		2587C412266003180021888C /* UserDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetail.swift; sourceTree = "<group>"; };
 		2587C41A26600CCE0021888C /* UserDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewController.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				2535CCF7265E312A00388733 /* Assets.xcassets */,
 				2535CCF9265E312A00388733 /* LaunchScreen.storyboard */,
 				2535CCFC265E312A00388733 /* Info.plist */,
+				25834A112661545400759B72 /* GenericViewController.swift */,
 			);
 			path = GitHubUser;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				2535CD64265E5AB800388733 /* GenericView.swift in Sources */,
 				2535CD37265E43D800388733 /* User.swift in Sources */,
 				2535CD5B265E590600388733 /* UserListView.swift in Sources */,
+				25834A122661545400759B72 /* GenericViewController.swift in Sources */,
 				2587C413266003180021888C /* UserDetail.swift in Sources */,
 				2556EBE22660BC7D003866C0 /* UserDetailNoteTableViewCell.swift in Sources */,
 				259D26982661365100080C2C /* DataController.swift in Sources */,

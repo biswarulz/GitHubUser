@@ -12,7 +12,7 @@ protocol UserDetailDisplayLogic: AnyObject {
     func displayUserDetail(_ viewData: UserDetailViewData)
 }
 
-class UserDetailViewController: UIViewController {
+class UserDetailViewController: GenericViewController {
 
     lazy var sceneView: UserDetailView = {
         
@@ -38,10 +38,25 @@ class UserDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
         title = userame
         dataSource = UserDetailDataSource(UserDetailViewData())
+        dataSource?.delegate = self
         sceneView.tableView.dataSource = dataSource
         sceneView.tableView.delegate = self
         setUpArchitecture()
-        tryToGetUserDetail()
+        tryToGetUserDetailFromRestCall()
+        
+        // handle when network comes online
+        let retryGainConnectionAction: RetryAction = { [weak self] in
+            
+            guard let self = self else { return }
+            self.tryToGetUserDetailFromRestCall()
+        }
+        let retryLossConnectionAction: RetryAction = { [weak self] in
+            
+            guard let self = self else { return }
+            self.tryToGetUserDetailFromCoreData()
+        }
+        afterGainConnectivity = retryGainConnectionAction
+        afterLostConnectivity = retryLossConnectionAction
     }
 
     override func loadView() {
@@ -57,10 +72,16 @@ class UserDetailViewController: UIViewController {
         viewController.userDetailViewModel = viewModel
     }
     
-    private func tryToGetUserDetail() {
+    private func tryToGetUserDetailFromRestCall() {
         
         sceneView.showSpinner()
         userDetailViewModel?.getUserDetailBasedOnUsername(userame)
+    }
+    
+    private func tryToGetUserDetailFromCoreData() {
+        
+        sceneView.showSpinner()
+        userDetailViewModel?.getUserDetailOfflineBasedOnUsername(userame)
     }
 }
 
@@ -90,6 +111,15 @@ extension UserDetailViewController: UITableViewDelegate {
         default:
             return 0.0
         }
+    }
+    
+}
+
+extension UserDetailViewController: PassNoteDataCallbackDelegate {
+    
+    func passNoteDataAction(_ text: String) {
+        
+        userDetailViewModel?.saveNoteDataToUserDetails(for: userame, noteText: text)
     }
     
 }

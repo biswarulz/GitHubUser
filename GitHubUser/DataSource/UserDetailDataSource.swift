@@ -14,9 +14,15 @@ enum DetailCellType : Int {
     case note
 }
 
+protocol PassNoteDataCallbackDelegate: AnyObject {
+    
+    func passNoteDataAction(_ text: String)
+}
+
 class UserDetailDataSource: NSObject {
     
     var userDetailViewData: UserDetailViewData
+    weak var delegate: PassNoteDataCallbackDelegate?
     
     init(_ userDetailViewData: UserDetailViewData) {
         
@@ -62,11 +68,21 @@ extension UserDetailDataSource: UITableViewDataSource {
             }
             
             cell.fillData(noteData)
+            cell.delegate = self
             cell.selectionStyle = .none
             return cell
         case .none:
             return UITableViewCell()
         }
+    }
+    
+}
+
+extension UserDetailDataSource: SaveNoteDataDelegate {
+    
+    func saveNoteButtonClicked(_ text: String) {
+        
+        delegate?.passNoteDataAction(text)
     }
     
 }

@@ -59,7 +59,7 @@ class UserListTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func fillData(_ data: User, isNoteAvailable: Bool) {
+    func fillData(_ data: User) {
         
         if let avatarURL = URL(string: data.avatarURL) {
             
@@ -71,7 +71,7 @@ class UserListTableViewCell: UITableViewCell {
         
         userNameLabel.text = data.userName
         userTypeLabel.text = "Role: \(data.userType)"
-        noteImageView.image = UIImage(systemName: isNoteAvailable ? Identifiers.systemNoteTextImage : Identifiers.emptyImage)
+        noteImageView.image = UIImage(systemName: data.isNoteAvailable ? Identifiers.systemNoteTextImage : Identifiers.emptyImage)
     }
     
     private func addCustomConstraints() {

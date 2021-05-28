@@ -10,6 +10,8 @@ import Foundation
 protocol UserDetailBusinessLogic: AnyObject {
     
     func getUserDetailBasedOnUsername(_ username: String)
+    func getUserDetailOfflineBasedOnUsername(_ username: String)
+    func saveNoteDataToUserDetails(for username: String, noteText text: String)
 }
 
 protocol UserDetailDataStore {
@@ -22,11 +24,13 @@ class UserDetailViewModel: UserDetailDataStore {
     private let serviceLayer: NetworkManager
     weak var viewController: UserDetailDisplayLogic?
     var userDetails: UserDetail
+    private let dataController: DataController
     
     init() {
         
         userDetails = UserDetail()
         serviceLayer = NetworkManager()
+        dataController = DataController()
     }
 }
 
@@ -43,7 +47,8 @@ extension UserDetailViewModel: UserDetailBusinessLogic {
             switch result {
             case .success(let userDetail):
                 self.userDetails = userDetail
-                self.presentuserDetail(userDetail)
+                self.dataController.saveUserDetail(userDetail)
+                self.presentuserDetail(userDetail, username: username)
             case .failure(let error):
                 print(error)
             }
@@ -51,7 +56,19 @@ extension UserDetailViewModel: UserDetailBusinessLogic {
         
     }
     
-    private func presentuserDetail(_ data: UserDetail) {
+    func getUserDetailOfflineBasedOnUsername(_ username: String) {
+        
+        let detail = dataController.fetchUserDetailBasedOnUsername(username)
+        self.userDetails = detail
+        self.presentuserDetail(detail, username: username)
+    }
+    
+    func saveNoteDataToUserDetails(for username: String, noteText text: String) {
+        
+        dataController.saveNoteDataForUser(username, note: text)
+    }
+    
+    private func presentuserDetail(_ data: UserDetail, username: String) {
         
         let media = UserDetailMediaViewData(userImage: data.avatarURL)
         let description = UserDetailDescriptionViewData(noOfFollowers: data.followers,
@@ -60,7 +77,8 @@ extension UserDetailViewModel: UserDetailBusinessLogic {
                                                         company: data.company,
                                                         blog: data.blog,
                                                         location: data.location)
-        let note = UserDetailNoteViewData(noteText: "")
+        let noteText = dataController.getNoteDataForUser(username)
+        let note = UserDetailNoteViewData(noteText: noteText)
         viewController?.displayUserDetail(UserDetailViewData(detailViewData: [media, description, note]))
     }
 }

@@ -20,17 +20,22 @@ class DataController {
     func insertUser(_ users: [User]) {
         
         for user in users {
+            let request = NSFetchRequest<UserEntity>(entityName: "UserEntity")
+            request.predicate = NSPredicate(format: "userName == %@", user.userName)
             
-            let entity = UserEntity(context: context)
-            entity.avatarURL = user.avatarURL
-            entity.userName = user.userName
-            entity.userId = Int16(user.userId)
-            entity.userType = user.userType
-            entity.isAdmin = user.isAdmin
-            
-            context.insert(entity)
-            
-            appDelegate.saveContext()
+            if let users = try? context.fetch(request), users.count == 0 {
+                
+                let entity = UserEntity(context: context)
+                entity.avatarURL = user.avatarURL
+                entity.userName = user.userName
+                entity.userId = Int16(user.userId)
+                entity.userType = user.userType
+                entity.isAdmin = user.isAdmin
+                
+                context.insert(entity)
+                
+                appDelegate.saveContext()
+            }
         }
     }
     
@@ -63,6 +68,24 @@ class DataController {
         return UserDetail()
     }
     
+    func saveUserDetail(_ detail: UserDetail) {
+        
+        let request = NSFetchRequest<UserEntity>(entityName: "UserEntity")
+        request.predicate = NSPredicate(format: "userName == %@", detail.userName)
+        
+        if let users = try? context.fetch(request), let firstUser = users.first {
+            
+            firstUser.fullName = detail.fullName
+            firstUser.company = detail.company
+            firstUser.blog = detail.blog
+            firstUser.location = detail.location
+            firstUser.followers = Int16(detail.followers)
+            firstUser.following = Int16(detail.following)
+                        
+            appDelegate.saveContext()
+        }
+    }
+    
     func saveNoteDataForUser(_ username: String, note: String) {
         
         let request = NSFetchRequest<UserEntity>(entityName: "UserEntity")
@@ -71,8 +94,20 @@ class DataController {
         if let users = try? context.fetch(request), let firstUser = users.first {
             
             firstUser.note = note
-            context.insert(firstUser)
             appDelegate.saveContext()
         }
+    }
+    
+    func getNoteDataForUser(_ username: String) -> String {
+        
+        let request = NSFetchRequest<UserEntity>(entityName: "UserEntity")
+        request.predicate = NSPredicate(format: "userName == %@", username)
+        
+        if let users = try? context.fetch(request), let firstUser = users.first, let note = firstUser.note {
+            
+            return note
+        }
+        
+        return ""
     }
 }
