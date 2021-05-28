@@ -16,4 +16,7 @@ struct Identifiers {
     static let systemNoteTextImage = "note.text"
     static let emptyImage = ""
     static let userDetailNetworkURL = "https://api.github.com/users/"
+    static let userDetailMediaCellIdentifier = "UserDetailMediaCell"
+    static let userDetailDescCellIdentifier = "UserDetailDescriptionCell"
+    static let userDetailNoteCellIdentifier = "UserDetailNoteCell"
 }

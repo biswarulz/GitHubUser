@@ -45,17 +45,61 @@ struct UserDetail: Decodable {
         avatarURL = try container.decodeIfPresent(String.self, forKey: .avatarURL) ?? ""
         userType = try container.decodeIfPresent(String.self, forKey: .userType) ?? ""
         isAdmin = try container.decodeIfPresent(Bool.self, forKey: .isAdmin) ?? false
-        fullName = try container.decodeIfPresent(String.self, forKey: .fullName) ?? ""
-        company = try container.decodeIfPresent(String.self, forKey: .company) ?? ""
-        blog = try container.decodeIfPresent(String.self, forKey: .blog) ?? ""
-        location = try container.decodeIfPresent(String.self, forKey: .location) ?? ""
+        fullName = try container.decodeIfPresent(String.self, forKey: .fullName) ?? "-"
+        company = try container.decodeIfPresent(String.self, forKey: .company) ?? "-"
+        blog = try container.decodeIfPresent(String.self, forKey: .blog) ?? "-"
+        location = try container.decodeIfPresent(String.self, forKey: .location) ?? "-"
         followers = try container.decodeIfPresent(Int.self, forKey: .followers) ?? 0
         following = try container.decodeIfPresent(Int.self, forKey: .following) ?? 0
+    }
+    
+    init() {
+        
+        userName = ""
+        userId = 0
+        avatarURL = ""
+        userType = ""
+        isAdmin = false
+        fullName = "-"
+        company = "-"
+        blog = "-"
+        location = "-"
+        followers = 0
+        following = 0
     }
 }
 
 struct UserDetailViewData {
     
-    let userDetail: UserDetail
-    let note: String
+    let detailViewData: [Any]
+    
+    init() {
+        
+        detailViewData = []
+    }
+    
+    init(detailViewData: [Any]) {
+        
+        self.detailViewData = detailViewData
+    }
+}
+
+struct UserDetailMediaViewData {
+    
+    let userImage: String
+}
+
+struct UserDetailDescriptionViewData {
+    
+    let noOfFollowers: Int
+    let noOfFollowing: Int
+    let fullName: String
+    let company: String
+    let blog: String
+    let location: String
+}
+
+struct UserDetailNoteViewData {
+    
+    let noteText: String
 }

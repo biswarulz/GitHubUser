@@ -37,7 +37,11 @@ class UserDetailViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         title = userame
+        dataSource = UserDetailDataSource(UserDetailViewData())
+        sceneView.tableView.dataSource = dataSource
+        sceneView.tableView.delegate = self
         setUpArchitecture()
+        tryToGetUserDetail()
     }
 
     override func loadView() {
@@ -52,11 +56,40 @@ class UserDetailViewController: UIViewController {
         viewModel.viewController = viewController
         viewController.userDetailViewModel = viewModel
     }
+    
+    private func tryToGetUserDetail() {
+        
+        sceneView.showSpinner()
+        userDetailViewModel?.getUserDetailBasedOnUsername(userame)
+    }
 }
 
 extension UserDetailViewController: UserDetailDisplayLogic {
     
     func displayUserDetail(_ viewData: UserDetailViewData) {
         
+        sceneView.hideSpinner()
+        dataSource?.userDetailViewData = viewData
+        sceneView.tableView.reloadData()
     }
+}
+
+extension UserDetailViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let type = DetailCellType(rawValue: indexPath.row)
+        
+        switch type {
+        case .media:
+            return 250.0
+        case .description:
+            return 200.0
+        case .note:
+            return 250.0
+        default:
+            return 0.0
+        }
+    }
+    
 }

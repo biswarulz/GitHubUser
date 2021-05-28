@@ -9,11 +9,11 @@ import UIKit
 
 class UserListTableViewCell: UITableViewCell {
     
-    let userImageView: UIImageView
-    let userListStackView: UIStackView
-    let userNameLabel: UILabel
-    let userTypeLabel: UILabel
-    let noteImageView: UIImageView
+    private let userImageView: UIImageView
+    private let userListStackView: UIStackView
+    private let userNameLabel: UILabel
+    private let userTypeLabel: UILabel
+    private let noteImageView: UIImageView
     
     /// constant values used
     private struct ViewTraits {
@@ -87,12 +87,6 @@ class UserListTableViewCell: UITableViewCell {
             userListStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: ViewTraits.viewMargin),
             userListStackView.trailingAnchor.constraint(equalTo: noteImageView.leadingAnchor, constant: -ViewTraits.viewMargin),
             userListStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -ViewTraits.viewMargin),
-            
-//            userNameLabel.leadingAnchor.constraint(equalTo: userListStackView.leadingAnchor),
-//            userNameLabel.heightAnchor.constraint(equalToConstant: 25.0),
-//            
-//            userTypeLabel.leadingAnchor.constraint(equalTo: userListStackView.leadingAnchor),
-//            userTypeLabel.heightAnchor.constraint(equalToConstant: 20.0),
             
             noteImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -ViewTraits.viewMargin),
             noteImageView.heightAnchor.constraint(equalToConstant: 25.0),
