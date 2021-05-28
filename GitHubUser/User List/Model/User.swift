@@ -35,6 +35,19 @@ struct User: Decodable {
         userType = try container.decodeIfPresent(String.self, forKey: .userType) ?? ""
         isAdmin = try container.decodeIfPresent(Bool.self, forKey: .isAdmin) ?? false
     }
+    
+    init(userName: String = "",
+         userId: Int = 0,
+         avatarURL: String = "",
+         userType: String = "",
+         isAdmin: Bool = false) {
+        
+        self.userName = userName
+        self.userId = userId
+        self.avatarURL = avatarURL
+        self.userType = userType
+        self.isAdmin = isAdmin
+    }
 }
 
 struct UserListViewData {

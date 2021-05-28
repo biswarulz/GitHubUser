@@ -52,7 +52,6 @@ class UserListViewController: UIViewController {
         definesPresentationContext = true
     }
     
-    
     private func setUpArchitecture() {
         
         let viewController = self

@@ -24,9 +24,11 @@ class UserlistViewModel: UserListDataStore {
     private let serviceLayer: NetworkManager
     weak var viewController: UserListDisplayLogic?
     var userList: [User]
+    private let dataController: DataController
     
     init() {
         
+        dataController = DataController()
         userList = []
         serviceLayer = NetworkManager()
     }
@@ -49,6 +51,7 @@ extension UserlistViewModel: UserListBusinessLogic {
             case .success(let user):
                 self.userList = user
                 self.presentUserList(user)
+                self.dataController.insertUser(user)
             case .failure(let error):
                 print(error)
             }
@@ -80,6 +83,7 @@ extension UserlistViewModel: UserListBusinessLogic {
                 case .success(let user):
                     self.userList.append(contentsOf: user)
                     self.presentUserList(self.userList)
+                    self.dataController.insertUser(user)
                 case .failure(let error):
                     print(error)
                 }

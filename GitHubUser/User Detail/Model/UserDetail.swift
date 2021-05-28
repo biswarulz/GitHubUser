@@ -53,6 +53,21 @@ struct UserDetail: Decodable {
         following = try container.decodeIfPresent(Int.self, forKey: .following) ?? 0
     }
     
+    init(userName: String, userId: Int, avatarURL: String, userType: String, isAdmin: Bool, fullName: String, company: String, blog: String, location: String, followers: Int, following: Int) {
+        
+        self.userName = userName
+        self.userId = userId
+        self.avatarURL = avatarURL
+        self.userType = userType
+        self.isAdmin = isAdmin
+        self.fullName = fullName
+        self.company = company
+        self.blog = blog
+        self.location = location
+        self.followers = followers
+        self.following = following
+    }
+    
     init() {
         
         userName = ""
