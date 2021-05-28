@@ -41,10 +41,8 @@ class GenericViewController: UIViewController {
             switch status {
             case .reachable(_):
                 self.executeReloadAction(action: self.afterGainConnectivity)
-                print("reachable")
                 self.genericSceneView.showOfflineBanner(false)
             case .notReachable:
-                print("not reachable")
                 self.genericSceneView.showOfflineBanner(true)
                 self.executeReloadAction(action: self.afterLostConnectivity)
             case .unknown:

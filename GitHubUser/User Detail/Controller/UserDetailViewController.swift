@@ -103,7 +103,7 @@ extension UserDetailViewController: UITableViewDelegate {
         
         switch type {
         case .media:
-            return 250.0
+            return 300.0
         case .description:
             return 200.0
         case .note:
