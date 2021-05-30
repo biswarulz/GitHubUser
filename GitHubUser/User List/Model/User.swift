@@ -63,4 +63,5 @@ struct User: Decodable {
 struct UserListViewData {
     
     let userList: [User]
+    let showOfflineData : Bool
 }

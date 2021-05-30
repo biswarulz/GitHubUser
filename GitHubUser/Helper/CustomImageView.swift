@@ -41,6 +41,9 @@ class CustomImageView: UIImageView {
                 
                 if let imageData = response.data {
                     
+                    self.image = showInvertedImage
+                        ? self.invertImage(UIImage(data: imageData) ?? UIImage())
+                        : UIImage(data: imageData)
                     self.dataController.saveImageToOfflineStorage(username, imageData: imageData)
                 }
             }

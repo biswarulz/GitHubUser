@@ -87,6 +87,8 @@ class UserDetailViewController: GenericViewController {
 
 extension UserDetailViewController: UserDetailDisplayLogic {
     
+    /// Displays data in the detail screen
+    /// - Parameter viewData: detail view data
     func displayUserDetail(_ viewData: UserDetailViewData) {
         
         sceneView.hideSpinner()
@@ -94,6 +96,7 @@ extension UserDetailViewController: UserDetailDisplayLogic {
         sceneView.tableView.reloadData()
     }
     
+    /// Display error screen
     func displayErrorForUserDetail() {
         
         sceneView.hideSpinner()
@@ -123,8 +126,12 @@ extension UserDetailViewController: UITableViewDelegate {
     
 }
 
+// MARK: - Call back delegate of save action for note
+
 extension UserDetailViewController: PassNoteDataCallbackDelegate {
     
+    /// Save note to core data
+    /// - Parameter text: note text
     func passNoteDataAction(_ text: String) {
         
         userDetailViewModel?.saveNoteDataToUserDetails(for: userame, noteText: text)

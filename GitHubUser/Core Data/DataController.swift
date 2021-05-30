@@ -10,7 +10,7 @@ import CoreData
 
 class DataController {
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     var context: NSManagedObjectContext {
         

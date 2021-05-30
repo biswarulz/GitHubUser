@@ -48,13 +48,16 @@ extension UserlistViewModel: UserListBusinessLogic {
         
     }
     
+    /// Gets all user list from offline storage
     func getAllUserListFromCoreData() {
         
         let users = dataController.fetchUsers()
         self.userList = users
-        presentUserList(users)
+        presentUserList(users, showsOfflineData: true)
     }
     
+    /// Filter userlist based on searched test
+    /// - Parameter text: searched text
     func fetchFilteredListBasedOnSearch(_ text: String) {
         
         guard !text.isEmpty else {
@@ -66,6 +69,7 @@ extension UserlistViewModel: UserListBusinessLogic {
         presentUserList(filteredUserList)
     }
     
+    /// Load more user list from the last index of listloaded earlier
     func loadMoreUserList() {
         
         if let lastUser = userList.last {
@@ -74,6 +78,8 @@ extension UserlistViewModel: UserListBusinessLogic {
         }
     }
     
+    /// Fetch user list from the last index
+    /// - Parameter index: index value
     private func fetchUserList(from index: Int) {
         
         serviceLayer.getUserList(_startIndex: index) { [weak self] (result) in
@@ -93,7 +99,11 @@ extension UserlistViewModel: UserListBusinessLogic {
         }
     }
     
-    private func presentUserList(_ data: [User]) {
+    /// Present user list by formatting the data to desired view data
+    /// - Parameters:
+    ///   - data: user list
+    ///   - showsOfflineData: boolean value id loaded from offline storage
+    private func presentUserList(_ data: [User], showsOfflineData: Bool = false) {
         
         var updateList: [User] = []
         for user in data {
@@ -103,10 +113,11 @@ extension UserlistViewModel: UserListBusinessLogic {
             user.isNoteAvailable = note.isEmpty ? false : true
             updateList.append(user)
         }
-        let viewData = UserListViewData(userList: updateList)
+        let viewData = UserListViewData(userList: updateList, showOfflineData: showsOfflineData)
         viewController?.displayUserList(viewData)
     }
     
+    /// Present if error occured
     private func presentErrorFetchingUserList() {
         
         viewController?.displayErrorForUserList()

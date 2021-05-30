@@ -30,11 +30,10 @@ class UserListViewController: GenericViewController {
         title = "User"
         setUpArchitecture()
         setupSearchField()
-        let viewData = UserListViewData(userList: [])
+        let viewData = UserListViewData(userList: [], showOfflineData: false)
         dataSource = UserListDataSource(viewData)
         sceneView.tableView.dataSource = dataSource
         sceneView.tableView.delegate = self
-        tryToGetUserListFromRestCall()
         
         // handle when network comes online
         let retryGainConnectionAction: RetryAction = { [weak self] in
@@ -50,6 +49,9 @@ class UserListViewController: GenericViewController {
         }
         afterGainConnectivity = retryGainConnectionAction
         afterLostConnectivity = retryLossConnectionAction
+        
+        tryToGetUserListFromRestCall()
+
     }
     
     override func loadView() {
@@ -95,13 +97,19 @@ class UserListViewController: GenericViewController {
 
 extension UserListViewController: UserListDisplayLogic {
     
+    /// Gets userlist and populate the data
+    /// - Parameter viewData: view data for user list
     func displayUserList(_ viewData: UserListViewData) {
         
-        sceneView.hideSpinner()
+        if !viewData.showOfflineData {
+            
+            sceneView.hideSpinner()
+        }
         dataSource?.userListViewData = viewData
         sceneView.tableView.reloadData()
     }
     
+    /// Displays error alert
     func displayErrorForUserList() {
         
         sceneView.hideSpinner()
@@ -142,8 +150,12 @@ extension UserListViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - Search Result delegate
+
 extension UserListViewController: UISearchResultsUpdating {
     
+    /// Gets called when typing in the search textfield
+    /// - Parameter searchController: search controller
     func updateSearchResults(for searchController: UISearchController) {
         
         if let text = searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
@@ -154,8 +166,12 @@ extension UserListViewController: UISearchResultsUpdating {
     }
 }
 
+// MARK: - Search delegate
+
 extension UserListViewController: UISearchControllerDelegate {
     
+    /// Gets called when cancelling search
+    /// - Parameter searchController: search controller
     func didDismissSearchController(_ searchController: UISearchController) {
         
         isUserSearched = false

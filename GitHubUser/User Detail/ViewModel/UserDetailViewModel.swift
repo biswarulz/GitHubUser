@@ -38,6 +38,8 @@ class UserDetailViewModel: UserDetailDataStore {
 
 extension UserDetailViewModel: UserDetailBusinessLogic {
     
+    /// fetch user details from username
+    /// - Parameter username: username of the user
     func getUserDetailBasedOnUsername(_ username: String) {
         
         serviceLayer.getUserDetail(forUsername: username) { [weak self] (result) in
@@ -58,6 +60,8 @@ extension UserDetailViewModel: UserDetailBusinessLogic {
         
     }
     
+    /// get user detail stored in the core data
+    /// - Parameter username: username of the user
     func getUserDetailOfflineBasedOnUsername(_ username: String) {
         
         let detail = dataController.fetchUserDetailBasedOnUsername(username)
@@ -65,11 +69,19 @@ extension UserDetailViewModel: UserDetailBusinessLogic {
         self.presentuserDetail(detail, username: username)
     }
     
+    /// save note text entered in core data
+    /// - Parameters:
+    ///   - username: username of the user
+    ///   - text: note text
     func saveNoteDataToUserDetails(for username: String, noteText text: String) {
         
         dataController.saveNoteDataForUser(username, note: text)
     }
     
+    /// Present user detail by formatting the data to desired view data
+    /// - Parameters:
+    ///   - data: user detail data
+    ///   - username: username of the user
     private func presentuserDetail(_ data: UserDetail, username: String) {
         
         let media = UserDetailMediaViewData(username: data.userName, userImage: data.avatarURL)
@@ -84,6 +96,7 @@ extension UserDetailViewModel: UserDetailBusinessLogic {
         viewController?.displayUserDetail(UserDetailViewData(detailViewData: [media, description, note]))
     }
     
+    /// Present error screen
     private func presentErrorFetchingUserDetail() {
         
         viewController?.displayErrorForUserDetail()

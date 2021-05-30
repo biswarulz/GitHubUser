@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2514B7AC2663AAF1002F9ACE /* DataControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2514B7AB2663AAF1002F9ACE /* DataControllerTests.swift */; };
 		2535CCEC265E312400388733 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2535CCEB265E312400388733 /* AppDelegate.swift */; };
 		2535CCEE265E312400388733 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2535CCED265E312400388733 /* SceneDelegate.swift */; };
 		2535CCF0265E312400388733 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2535CCEF265E312400388733 /* UserListViewController.swift */; };
@@ -63,6 +64,7 @@
 /* Begin PBXFileReference section */
 		13DAA7774E8751025702A3EA /* Pods-GitHubUser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubUser.release.xcconfig"; path = "Target Support Files/Pods-GitHubUser/Pods-GitHubUser.release.xcconfig"; sourceTree = "<group>"; };
 		1BCBFDC26021A6F7CE4EED86 /* Pods-GitHubUser-GitHubUserUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubUser-GitHubUserUITests.release.xcconfig"; path = "Target Support Files/Pods-GitHubUser-GitHubUserUITests/Pods-GitHubUser-GitHubUserUITests.release.xcconfig"; sourceTree = "<group>"; };
+		2514B7AB2663AAF1002F9ACE /* DataControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataControllerTests.swift; sourceTree = "<group>"; };
 		2535CCE8265E312400388733 /* GitHubUser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubUser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2535CCEB265E312400388733 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2535CCED265E312400388733 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				2535CD05265E312A00388733 /* UserDetailViewModelTests.swift */,
 				2535CD07265E312A00388733 /* Info.plist */,
 				258918EA2663756500D9441B /* UserListViewModelTests.swift */,
+				2514B7AB2663AAF1002F9ACE /* DataControllerTests.swift */,
 			);
 			path = GitHubUserTests;
 			sourceTree = "<group>";
@@ -652,6 +655,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2535CD06265E312A00388733 /* UserDetailViewModelTests.swift in Sources */,
+				2514B7AC2663AAF1002F9ACE /* DataControllerTests.swift in Sources */,
 				258918EB2663756500D9441B /* UserListViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
