@@ -9,7 +9,7 @@ import UIKit
 
 class UserListTableViewCell: UITableViewCell {
     
-    private let userImageView: UIImageView
+    private let userImageView: CustomImageView
     private let userListStackView: UIStackView
     private let userNameLabel: UILabel
     private let userTypeLabel: UILabel
@@ -25,7 +25,7 @@ class UserListTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
-        userImageView = UIImageView()
+        userImageView = CustomImageView()
         userImageView.layer.cornerRadius = ViewTraits.userImageViewWidth/2
         userImageView.clipsToBounds = true
         
@@ -59,11 +59,12 @@ class UserListTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func fillData(_ data: User) {
+    func fillData(_ data: User, rowIndex: Int) {
         
         if let avatarURL = URL(string: data.avatarURL) {
             
-            userImageView.setAFImage(url: avatarURL)
+            let rem = (rowIndex + 1) % 4
+            userImageView.setAFImage(for: data.userName, url: avatarURL, showInvertedImage: rem == 0 ? true : false)
         } else {
             
             userImageView.image = UIImage(named: Identifiers.userPlaceHolderImage)

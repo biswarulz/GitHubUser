@@ -10,6 +10,7 @@ import UIKit
 protocol UserDetailDisplayLogic: AnyObject {
     
     func displayUserDetail(_ viewData: UserDetailViewData)
+    func displayErrorForUserDetail()
 }
 
 class UserDetailViewController: GenericViewController {
@@ -80,7 +81,6 @@ class UserDetailViewController: GenericViewController {
     
     private func tryToGetUserDetailFromCoreData() {
         
-        sceneView.showSpinner()
         userDetailViewModel?.getUserDetailOfflineBasedOnUsername(userame)
     }
 }
@@ -92,6 +92,14 @@ extension UserDetailViewController: UserDetailDisplayLogic {
         sceneView.hideSpinner()
         dataSource?.userDetailViewData = viewData
         sceneView.tableView.reloadData()
+    }
+    
+    func displayErrorForUserDetail() {
+        
+        sceneView.hideSpinner()
+        let alert = UIAlertController(title: Identifiers.errorTitle, message: Identifiers.errorDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Identifiers.okTitle, style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

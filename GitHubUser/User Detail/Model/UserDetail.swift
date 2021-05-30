@@ -101,6 +101,7 @@ struct UserDetailViewData {
 
 struct UserDetailMediaViewData {
     
+    let username: String
     let userImage: String
 }
 

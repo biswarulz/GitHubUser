@@ -9,7 +9,7 @@ import UIKit
 
 class UserDetailMediaTableViewCell: UITableViewCell {
 
-    private let detailImageView: UIImageView
+    private let detailImageView: CustomImageView
     
     /// constant values used
     private struct ViewTraits {
@@ -19,7 +19,7 @@ class UserDetailMediaTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
-        detailImageView = UIImageView()
+        detailImageView = CustomImageView()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -35,7 +35,7 @@ class UserDetailMediaTableViewCell: UITableViewCell {
         
         if let userImage = URL(string: data.userImage) {
             
-            detailImageView.setAFImage(url: userImage)
+            detailImageView.setAFImage(for: data.username, url: userImage)
         } else {
             
             detailImageView.image = UIImage(named: Identifiers.userPlaceHolderImage)

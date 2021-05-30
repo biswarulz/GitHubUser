@@ -49,8 +49,8 @@ extension UserDetailViewModel: UserDetailBusinessLogic {
                 self.userDetails = userDetail
                 self.dataController.saveUserDetail(userDetail)
                 self.presentuserDetail(userDetail, username: username)
-            case .failure(let error):
-                print(error)
+            case .failure(_):
+                self.presentErrorFetchingUserDetail()
             }
         }
         
@@ -70,7 +70,7 @@ extension UserDetailViewModel: UserDetailBusinessLogic {
     
     private func presentuserDetail(_ data: UserDetail, username: String) {
         
-        let media = UserDetailMediaViewData(userImage: data.avatarURL)
+        let media = UserDetailMediaViewData(username: data.userName, userImage: data.avatarURL)
         let description = UserDetailDescriptionViewData(noOfFollowers: data.followers,
                                                         noOfFollowing: data.following,
                                                         fullName: data.fullName,
@@ -80,5 +80,10 @@ extension UserDetailViewModel: UserDetailBusinessLogic {
         let noteText = dataController.getNoteDataForUser(username)
         let note = UserDetailNoteViewData(noteText: noteText)
         viewController?.displayUserDetail(UserDetailViewData(detailViewData: [media, description, note]))
+    }
+    
+    private func presentErrorFetchingUserDetail() {
+        
+        viewController?.displayErrorForUserDetail()
     }
 }

@@ -110,4 +110,30 @@ class DataController {
         
         return ""
     }
+    
+    func saveImageToOfflineStorage(_ username: String, imageData: Data) {
+        
+        let request = NSFetchRequest<UserEntity>(entityName: "UserEntity")
+        request.predicate = NSPredicate(format: "userName == %@", username)
+        
+        if let users = try? context.fetch(request), let firstUser = users.first {
+            
+            firstUser.cachedImage = imageData
+            appDelegate.saveContext()
+        }
+    }
+    
+    func getImageStoredOfflineStorage(_ username: String) -> Data? {
+        
+        let request = NSFetchRequest<UserEntity>(entityName: "UserEntity")
+        request.predicate = NSPredicate(format: "userName == %@", username)
+        
+        if let users = try? context.fetch(request), let firstUser = users.first {
+            
+            
+            return firstUser.cachedImage
+        }
+        
+        return nil
+    }
 }

@@ -32,7 +32,7 @@ extension UserListDataSource: UITableViewDataSource {
         }
         
         let user = userListViewData.userList[indexPath.row]
-        cell.fillData(user)
+        cell.fillData(user, rowIndex: indexPath.row)
         cell.selectionStyle = .none
         return cell
     }

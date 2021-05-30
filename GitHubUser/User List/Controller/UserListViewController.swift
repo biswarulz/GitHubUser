@@ -10,6 +10,7 @@ import UIKit
 protocol UserListDisplayLogic: AnyObject {
     
     func displayUserList(_ viewData: UserListViewData)
+    func displayErrorForUserList()
 }
 
 class UserListViewController: GenericViewController {
@@ -88,7 +89,6 @@ class UserListViewController: GenericViewController {
     
     private func tryToGetUserListFromOffline() {
         
-        sceneView.showSpinner()
         userListViewModel?.getAllUserListFromCoreData()
     }
 }
@@ -100,6 +100,14 @@ extension UserListViewController: UserListDisplayLogic {
         sceneView.hideSpinner()
         dataSource?.userListViewData = viewData
         sceneView.tableView.reloadData()
+    }
+    
+    func displayErrorForUserList() {
+        
+        sceneView.hideSpinner()
+        let alert = UIAlertController(title: Identifiers.errorTitle, message: Identifiers.errorDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: Identifiers.okTitle, style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

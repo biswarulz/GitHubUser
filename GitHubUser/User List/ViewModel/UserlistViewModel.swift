@@ -92,8 +92,8 @@ extension UserlistViewModel: UserListBusinessLogic {
                     self.userList.append(contentsOf: user)
                     self.presentUserList(self.userList)
                     self.dataController.insertUser(user)
-                case .failure(let error):
-                    print(error)
+                case .failure(_):
+                    self.presentErrorFetchingUserList()
                 }
             }
         }
@@ -111,5 +111,10 @@ extension UserlistViewModel: UserListBusinessLogic {
         }
         let viewData = UserListViewData(userList: updateList)
         viewController?.displayUserList(viewData)
+    }
+    
+    private func presentErrorFetchingUserList() {
+        
+        viewController?.displayErrorForUserList()
     }
 }

@@ -19,4 +19,7 @@ struct Identifiers {
     static let userDetailMediaCellIdentifier = "UserDetailMediaCell"
     static let userDetailDescCellIdentifier = "UserDetailDescriptionCell"
     static let userDetailNoteCellIdentifier = "UserDetailNoteCell"
+    static let errorTitle = "Server Error"
+    static let errorDescription = "Sorry for the inconvinience. There is some error fetching fresh data from the server"
+    static let okTitle = "Ok"
 }
