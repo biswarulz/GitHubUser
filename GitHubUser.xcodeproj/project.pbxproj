@@ -179,7 +179,6 @@
 				2535CCF7265E312A00388733 /* Assets.xcassets */,
 				2535CCF9265E312A00388733 /* LaunchScreen.storyboard */,
 				2535CCFC265E312A00388733 /* Info.plist */,
-				25834A112661545400759B72 /* GenericViewController.swift */,
 			);
 			path = GitHubUser;
 			sourceTree = "<group>";
@@ -280,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				2535CD63265E5AB800388733 /* GenericView.swift */,
+				25834A112661545400759B72 /* GenericViewController.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
