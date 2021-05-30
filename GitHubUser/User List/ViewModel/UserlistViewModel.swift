@@ -27,11 +27,13 @@ class UserlistViewModel: UserListDataStore {
     var userList: [User]
     private let dataController: DataController
     
-    init() {
+    init(dataController: DataController = DataController(),
+         userList: [User] = [],
+         serviceLayer: NetworkManager = NetworkManager()) {
         
-        dataController = DataController()
-        userList = []
-        serviceLayer = NetworkManager()
+        self.dataController = dataController
+        self.userList = userList
+        self.serviceLayer = serviceLayer
     }
     
 }
@@ -42,21 +44,8 @@ extension UserlistViewModel: UserListBusinessLogic {
     func getAllUserList() {
         
         let pageIndex = 0
-        serviceLayer.getUserList(_startIndex: pageIndex) { [weak self] (result) in
-            
-            guard let self = self else {
-                
-                return
-            }
-            switch result {
-            case .success(let user):
-                self.userList = user
-                self.presentUserList(user)
-                self.dataController.insertUser(user)
-            case .failure(let error):
-                print(error)
-            }
-        }
+        fetchUserList(from: pageIndex)
+        
     }
     
     func getAllUserListFromCoreData() {
@@ -81,20 +70,25 @@ extension UserlistViewModel: UserListBusinessLogic {
         
         if let lastUser = userList.last {
             
-            serviceLayer.getUserList(_startIndex: lastUser.userId) { [weak self] (result) in
+            fetchUserList(from: lastUser.userId)
+        }
+    }
+    
+    private func fetchUserList(from index: Int) {
+        
+        serviceLayer.getUserList(_startIndex: index) { [weak self] (result) in
+            
+            guard let self = self else {
                 
-                guard let self = self else {
-                    
-                    return
-                }
-                switch result {
-                case .success(let user):
-                    self.userList.append(contentsOf: user)
-                    self.presentUserList(self.userList)
-                    self.dataController.insertUser(user)
-                case .failure(_):
-                    self.presentErrorFetchingUserList()
-                }
+                return
+            }
+            switch result {
+            case .success(let user):
+                self.userList.append(contentsOf: user)
+                self.presentUserList(self.userList)
+                self.dataController.insertUser(user)
+            case .failure(_):
+                self.presentErrorFetchingUserList()
             }
         }
     }

@@ -14,7 +14,7 @@
 		2535CCF6265E312400388733 /* GitHubUser.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2535CCF4265E312400388733 /* GitHubUser.xcdatamodeld */; };
 		2535CCF8265E312A00388733 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2535CCF7265E312A00388733 /* Assets.xcassets */; };
 		2535CCFB265E312A00388733 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2535CCF9265E312A00388733 /* LaunchScreen.storyboard */; };
-		2535CD06265E312A00388733 /* GitHubUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2535CD05265E312A00388733 /* GitHubUserTests.swift */; };
+		2535CD06265E312A00388733 /* UserDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2535CD05265E312A00388733 /* UserDetailViewModelTests.swift */; };
 		2535CD11265E312A00388733 /* GitHubUserUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2535CD10265E312A00388733 /* GitHubUserUITests.swift */; };
 		2535CD37265E43D800388733 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2535CD36265E43D800388733 /* User.swift */; };
 		2535CD40265E488900388733 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2535CD3F265E488900388733 /* NetworkManager.swift */; };
@@ -73,7 +73,7 @@
 		2535CCFA265E312A00388733 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2535CCFC265E312A00388733 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2535CD01265E312A00388733 /* GitHubUserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubUserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2535CD05265E312A00388733 /* GitHubUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUserTests.swift; sourceTree = "<group>"; };
+		2535CD05265E312A00388733 /* UserDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewModelTests.swift; sourceTree = "<group>"; };
 		2535CD07265E312A00388733 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2535CD0C265E312A00388733 /* GitHubUserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubUserUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2535CD10265E312A00388733 /* GitHubUserUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubUserUITests.swift; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 		2535CD04265E312A00388733 /* GitHubUserTests */ = {
 			isa = PBXGroup;
 			children = (
-				2535CD05265E312A00388733 /* GitHubUserTests.swift */,
+				2535CD05265E312A00388733 /* UserDetailViewModelTests.swift */,
 				2535CD07265E312A00388733 /* Info.plist */,
 				258918EA2663756500D9441B /* UserListViewModelTests.swift */,
 			);
@@ -651,7 +651,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2535CD06265E312A00388733 /* GitHubUserTests.swift in Sources */,
+				2535CD06265E312A00388733 /* UserDetailViewModelTests.swift in Sources */,
 				258918EB2663756500D9441B /* UserListViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

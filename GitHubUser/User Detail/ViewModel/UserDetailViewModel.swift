@@ -26,11 +26,13 @@ class UserDetailViewModel: UserDetailDataStore {
     var userDetails: UserDetail
     private let dataController: DataController
     
-    init() {
+    init(dataController: DataController = DataController(),
+         userDetails: UserDetail = UserDetail(),
+         serviceLayer: NetworkManager = NetworkManager()) {
         
-        userDetails = UserDetail()
-        serviceLayer = NetworkManager()
-        dataController = DataController()
+        self.dataController = dataController
+        self.userDetails = userDetails
+        self.serviceLayer = serviceLayer
     }
 }
 
